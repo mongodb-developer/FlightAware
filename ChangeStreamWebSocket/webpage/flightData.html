@@ -37,7 +37,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const socket = new WebSocket('ws://<your_server_ip_address>>/changestreamservice/v1/getmetrics'); // Replace with your WebSocket URL
+            const socket = new WebSocket('ws://localhost:8543/changestreamservice/v1/getmetrics'); // Replace with your WebSocket URL
             const summaryLine = document.getElementById('summary');
 
             socket.onmessage = function(event) {
