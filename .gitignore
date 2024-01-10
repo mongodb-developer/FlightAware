@@ -28,3 +28,6 @@ FlightAwareStreamer/streamprocessor_stuff
 FlightAwareStreamer/sampleResponse.json
 temp
 ChangeStreamWebSocket/.vscode/launch.json
+ChangeStreamWebSocket/.env
+ChangeStreamWebSocket/webpage/flightData.html
+FlightAwareStreamer/config.json
