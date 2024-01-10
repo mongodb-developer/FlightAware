@@ -1,0 +1,15 @@
+[Unit]
+Description=Flight Aware / Atlas Change Stream Websocket Service 
+After=network.target
+StartLimitIntervalSec=0
+ 
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=graeme
+WorkingDirectory=/opt/flightaware/changestreamwebsocket
+ExecStart=/opt/flightaware/changestreamwebsocket/changestreamws
+ 
+[Install]
+WantedBy=multi-user.target

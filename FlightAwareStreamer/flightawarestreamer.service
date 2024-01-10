@@ -1,0 +1,15 @@
+[Unit]
+Description=Flight Aware to Kafka Streaming Service 
+After=network.target
+StartLimitIntervalSec=0
+ 
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=graeme
+WorkingDirectory=/opt/flightaware
+ExecStart=/opt/flightaware/flightawarestreamer
+ 
+[Install]
+WantedBy=multi-user.target

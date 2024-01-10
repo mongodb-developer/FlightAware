@@ -1,0 +1,16 @@
+{
+    "LOGFILE": "flightaware.log",
+    "PIDFILE": "flightawarepidfile",
+    "KAFKASERVER": "<yourkafkaserver>",
+    "KAFKAADSBTOPIC": "stratux_pi_topic",
+    "KAFKAFLIGHTSCHEDULETOPIC": "flight_schedule_topic",
+    "KAFKAUSER": "<youruser>",
+    "KAFKAPASS": "<yourpassword>",
+    "PIAWARESERVER": "<your_piaware_server>:1501",
+    "PIAWAREUSER": "<yourpiawareuser>",
+    "PIAWAREPASS": "<yourpiawarepass>",
+    "PIAWAREUSECOMPRESSION": false,
+    "AEROAPIKEY": "<youraeroapikey>",
+    "AEROAPISERVER": "https://aeroapi.flightaware.com/aeroapi/airports/KDEN/flights/",
+    "RETRIEVALMINUTE": 26
+}

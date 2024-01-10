@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>ADSB Flight Data Table</h2>
+    <p id="summary"></p>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Tail</th>
+                <th>Altitude</th>
+                <th>Speed</th>
+                <th>Heading</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const socket = new WebSocket('ws://<your_server_ip_address>>/changestreamservice/v1/getmetrics'); // Replace with your WebSocket URL
+            const summaryLine = document.getElementById('summary');
+
+            socket.onmessage = function(event) {
+                var message = JSON.parse(event.data);
+                var metrics = JSON.parse(message.body); 
+                
+                //console.log(metrics);
+
+                var flightItems = {}
+                for (let key in metrics.metricsList) {
+                    if (metrics.metricsList.hasOwnProperty(key)) {
+                        var item = metrics.metricsList[key];
+                        //console.log(item);
+                        if(!flightItems.hasOwnProperty(item.ident)){
+                            flightItems[item.ident] = {};
+                            flightItems[item.ident].Identifier = item.ident;
+                        }
+                        if(item.metricName == "Tail"){
+                            flightItems[item.ident].Tail = item.metricValue
+                        }
+                        if(item.metricName == "Altitude"){
+                            flightItems[item.ident].Altitude = item.metricValue
+                            flightItems[item.ident].AltitudeTrend = item.metricTrend
+                        }
+                        if(item.metricName == "Speed"){
+                            flightItems[item.ident].Speed = item.metricValue
+                            flightItems[item.ident].SpeedTrend = item.metricTrend
+                        }
+                        if(item.metricName == "Heading"){
+                            flightItems[item.ident].Heading = item.metricValue
+                        }
+                        if(item.metricName == "Latitude"){
+                            flightItems[item.ident].Latitude = item.metricValue
+                        }
+                        if(item.metricName == "Longitude"){
+                            flightItems[item.ident].Longitude = item.metricValue
+                        }
+                    }
+                };
+                console.log(flightItems);
+
+                tableBody.innerHTML = ''; // Clear existing table rows
+                var i = 0;
+                for (let key in flightItems) {
+                    if (flightItems.hasOwnProperty(key)) {
+                        var item = flightItems[key];
+                        if(!item.Tail.startsWith("#")){   
+                            i++;
+                            const row = tableBody.insertRow();
+                            const tailCell = row.insertCell(0);
+                            const altitudeCell = row.insertCell(1);
+                            const speedCell = row.insertCell(2);
+                            const headingCell = row.insertCell(3);
+                            const latCell = row.insertCell(4);
+                            const lngCell = row.insertCell(4);
+
+                            tailCell.textContent = item.Tail;
+                            altitudeCell.textContent = item.Altitude;
+                            speedCell.textContent = item.Speed;
+                            headingCell.textContent = item.Heading;
+                            latCell.textContent = item.Latitude;
+                            lngCell.textContent = item.Longitude;
+                        }
+                    }
+                }
+                summary.innerHTML = i + " aircraft observed with position and flight number data"
+            };
+
+            socket.onerror = function(error) {
+                console.error('WebSocket Error: ', error);
+            };
+
+            socket.onclose = function(event) {
+                console.log('WebSocket connection closed:', event);
+            };
+        });
+    </script>
+</body>
+</html>

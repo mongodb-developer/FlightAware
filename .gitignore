@@ -19,3 +19,12 @@
 
 # Go workspace file
 go.work
+ChangeStreamWebSocket/changestreamwebsocket
+ChangeStreamWebSocket/changestreamer.log
+FlightAwareStreamer/flightaware.log
+FlightAwareStreamer/flightawarepidfile
+FlightAwareStreamer/flightawarestreamer
+FlightAwareStreamer/streamprocessor_stuff
+FlightAwareStreamer/sampleResponse.json
+temp
+ChangeStreamWebSocket/.vscode/launch.json
